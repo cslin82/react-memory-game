@@ -27,6 +27,7 @@ class App extends Component {
 
     this.state = {
       tags: Array(12).fill(false),
+      pieceorder: this.shuffledArr(12),
       score: 0,
       highScore: 0
     }
@@ -49,6 +50,12 @@ class App extends Component {
           newHighScore = newScore;
         }
 
+        if (newTags.every(x => x)) {
+          alert('win');
+          this.resetGame();
+        }
+
+        // ES6-ify this later
         return {
           tags: newTags,
           score: newScore,
@@ -61,7 +68,8 @@ class App extends Component {
   resetGame() {
     this.setState({
       tags: Array(12).fill(false),
-      score: 0
+      score: 0,
+      pieceorder: this.shuffledArr(12)
     })
   }
 
@@ -99,11 +107,9 @@ class App extends Component {
         </header>
         <div className="Game">
           <p className="App-intro">Click on the game cards without repeating</p>
-          Game board goes here
+          Game board goes here (TODO: Prevent shuffle on game win?)
           <ul>
-            {
-              this.shuffledArr(12).map((i) => this.renderGamepiece(i))
-            }
+            {this.state.pieceorder.map((i) => this.renderGamepiece(i))}
           </ul>
 
         </div>
