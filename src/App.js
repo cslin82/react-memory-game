@@ -3,12 +3,14 @@ import './App.css';
 
 
 // all one file for now, split later
-class Gamepiece extends React.Component {
+class Gamepiece extends Component {
 
   render() {
     return (
       <button className="gamepiece"
-        onClick={() => this.props.onClick()}>
+        onClick={() => this.props.onClick()}
+        key={this.props.value}
+      >
         thing {this.props.value} is {this.props.pieceStatus}
       </button>
     );
@@ -75,8 +77,9 @@ class App extends Component {
 
   renderGamepiece(i) {
     return (
-      <li>
+      <li key={i}>
         <Gamepiece value={i}
+          key={i}
           onClick={() => this.handleClick(i)}
           pieceStatus={this.state.tags[i].toString()}
         />
