@@ -9,7 +9,6 @@ class Gamepiece extends Component {
     return (
       <button className="gamepiece"
         onClick={() => this.props.onClick()}
-        key={this.props.value}
       >
         thing {this.props.value} is {this.props.pieceStatus}
       </button>
@@ -54,16 +53,17 @@ class App extends Component {
 
         if (newTags.every(x => x)) {
           alert('win');
-          this.resetGame();
+          // this.resetGame(); // throws warning
         }
 
         // ES6-ify this later
         return {
           tags: newTags,
           score: newScore,
-          highScore: newHighScore
+          highScore: newHighScore,
+          pieceorder: this.shuffledArr(12)
         };
-      })
+      }) // end setState
     }
   }
 
@@ -79,7 +79,6 @@ class App extends Component {
     return (
       <li key={i}>
         <Gamepiece value={i}
-          key={i}
           onClick={() => this.handleClick(i)}
           pieceStatus={this.state.tags[i].toString()}
         />
