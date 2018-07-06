@@ -34,31 +34,45 @@ class App extends Component {
   }
 
   handleClick(i) {
-    this.setState(((prevState, props) => {
-      let newTags = [...prevState.tags];
-      newTags[i] = !newTags[i];
-      console.log('newtags:', newTags);
-      console.log('props:', props);
-      let newScore = prevState.score + 1;
-      let newHighScore = prevState.highScore;
-      if (newScore > prevState.highScore) {
-        newHighScore = newScore;
-      }
+    if (this.state.tags[i]) {
+      alert('miss');
+      this.resetGame();
+    } else {
+      // increment current score, track high score
+      this.setState((prevState, props) => {
+        let newTags = [...prevState.tags];
+        newTags[i] = !newTags[i]; // or just set to true
 
-      return { 
-        tags: newTags,
-        score: newScore,
-        highScore: newHighScore
-       };
-    }))
+        let newScore = prevState.score + 1;
+        let newHighScore = prevState.highScore;
+        if (newScore > prevState.highScore) {
+          newHighScore = newScore;
+        }
+
+        return {
+          tags: newTags,
+          score: newScore,
+          highScore: newHighScore
+        };
+      })
+    }
+  }
+
+  resetGame() {
+    this.setState({
+      tags: Array(12).fill(false),
+      score: 0
+    })
   }
 
   renderGamepiece(i) {
     return (
-      <Gamepiece value={i}
-        onClick={() => this.handleClick(i)}
-        pieceStatus={this.state.tags[i].toString()}
-      />
+      <li>
+        <Gamepiece value={i}
+          onClick={() => this.handleClick(i)}
+          pieceStatus={this.state.tags[i].toString()}
+        />
+      </li>
     );
   }
 
