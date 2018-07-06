@@ -18,11 +18,10 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+.Scoreboard {
+  font-size: 1.25em;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.App-intro {
+  font-size: large;
 }
