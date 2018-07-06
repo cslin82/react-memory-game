@@ -76,6 +76,20 @@ class App extends Component {
     );
   }
 
+  // shuffle functions from https://bost.ocks.org/mike/shuffle/compare.html
+  shuffledArr(l) {
+    let newArr = Array(l)
+    newArr = [...newArr.keys()]
+    let m = l, t, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = newArr[m];
+      newArr[m] = newArr[i];
+      newArr[i] = t;
+    }
+    return newArr;
+  }
+
   render() {
     return (
       <div className="App">
@@ -87,14 +101,9 @@ class App extends Component {
           <p className="App-intro">Click on the game cards without repeating</p>
           Game board goes here
           <ul>
-            {this.renderGamepiece(0)}
-            {this.renderGamepiece(1)}
-            {this.renderGamepiece(2)}
-            {this.renderGamepiece(3)}
-            {this.renderGamepiece(4)}
-            {this.renderGamepiece(5)}
-            {this.renderGamepiece(6)}
-            {this.state.tags.toString()}
+            {
+              this.shuffledArr(12).map((i) => this.renderGamepiece(i))
+            }
           </ul>
 
         </div>
