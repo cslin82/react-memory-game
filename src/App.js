@@ -17,6 +17,16 @@ class Gamepiece extends Component {
 }
 // end Gamepiece
 
+function GameStatus(props) {
+  if (props.condition === 'win') {
+    return <p>You win!</p>
+  } else if (props.condition === 'lose') {
+    return <p>You lose!</p>
+  } else {
+    return null;
+  }
+}
+
 class App extends Component {
   constructor(props) {
 
@@ -37,35 +47,36 @@ class App extends Component {
   handleClick(i) {
     if (this.state.resetOnNext) {
       this.resetGame();
-    } else {
-      // increment current score, track high score
-      this.setState((prevState, props) => {
-
-        if (this.state.tags[i]) {
-          return {
-            resetOnNext: true,
-            condition: 'lose'
-          }
-        }
-
-        let newState = { ...prevState }
-        newState.tags[i] = !prevState.tags[i]; // or just set to true
-        newState.score = prevState.score + 1;
-
-        if (newState.score > prevState.highScore) {
-          newState.highScore = newState.score;
-        }
-
-        if (newState.tags.every(x => x)) {
-          newState.resetOnNext = true;
-          newState.condition = 'win';
-        }
-
-        newState.pieceOrder = this.shuffledArr(12);
-
-        return newState;
-      }) // end setState
     }
+
+    // increment current score, track high score
+    this.setState((prevState, props) => {
+
+      if (this.state.tags[i]) {
+        return {
+          resetOnNext: true,
+          condition: 'lose'
+        }
+      }
+
+      let newState = { ...prevState }
+      newState.tags[i] = !prevState.tags[i]; // or just set to true
+      newState.score = prevState.score + 1;
+
+      if (newState.score > prevState.highScore) {
+        newState.highScore = newState.score;
+      }
+
+      if (newState.tags.every(x => x)) {
+        newState.resetOnNext = true;
+        newState.condition = 'win';
+      }
+
+      newState.pieceOrder = this.shuffledArr(12);
+
+      return newState;
+    }) // end setState
+
   }
 
   resetGame() {
@@ -113,7 +124,8 @@ class App extends Component {
         <div className="Game">
           <p className="App-intro">Click on the game cards without repeating</p>
           <p>Game board goes here (TODO: Prevent shuffle on game win?)</p>
-          {this.state.condition}
+          <GameStatus condition={this.state.condition}/>
+          
           <ul>
             {this.state.pieceOrder.map((i) => this.renderGamepiece(i))}
           </ul>
