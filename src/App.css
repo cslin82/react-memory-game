@@ -25,3 +25,8 @@
 .App-intro {
   font-size: large;
 }
+
+.gamepiece {
+  height: 225px;
+  width: 225px;
+}

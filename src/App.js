@@ -19,9 +19,9 @@ class Gamepiece extends Component {
 
 function GameStatus(props) {
   if (props.condition === 'win') {
-    return <p>You win!</p>
+    return <h2>You win!</h2>
   } else if (props.condition === 'lose') {
-    return <p>You lose!</p>
+    return <h2>You lose!</h2>
   } else {
     return null;
   }
@@ -91,12 +91,12 @@ class App extends Component {
 
   renderGamepiece(i) {
     return (
-      <li key={i}>
+      <div className="bd-highlight p-3 game-piece" key={i}>
         <Gamepiece value={i}
           onClick={() => this.handleClick(i)}
           pieceStatus={this.state.tags[i].toString()}
         />
-      </li>
+      </div>
     );
   }
 
@@ -120,16 +120,16 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">React Memory Game</h1>
           <h2 className="Scoreboard">Scoreboard Current score: {this.state.score} Top score: {this.state.highScore}</h2>
+          <GameStatus condition={this.state.condition} />
         </header>
         <div className="Game">
           <p className="App-intro">Click on the game cards without repeating</p>
-          <p>Game board goes here (TODO: Prevent shuffle on game win?)</p>
-          <GameStatus condition={this.state.condition}/>
-          
-          <ul>
-            {this.state.pieceOrder.map((i) => this.renderGamepiece(i))}
-          </ul>
+          <div className="container">
+            <div className="d-flex flex-row flex-wrap align-content-center">
 
+              {this.state.pieceOrder.map((i) => this.renderGamepiece(i))}
+            </div>
+          </div>
         </div>
       </div>
     );
