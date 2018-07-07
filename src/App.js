@@ -7,10 +7,10 @@ class Gamepiece extends Component {
 
   render() {
     return (
-      <button className="gamepiece"
+      <button className="gamepiece btn btn-light"
         onClick={() => this.props.onClick()}
       >
-        thing {this.props.value} is {this.props.pieceStatus}
+        <i class={'far fa-' + this.props.emoji}></i>{/*  {this.props.value} is {this.props.pieceStatus} */}
       </button>
     );
   }
@@ -36,6 +36,18 @@ class App extends Component {
     this.state = {
       tags: Array(12).fill(false),
       pieceOrder: this.shuffledArr(12),
+      pieceEmoji: ['angry',
+        'dizzy',
+        'flushed',
+        'frown',
+        'grimace',
+        'grin',
+        'grin-stars',
+        'laugh',
+        'smile',
+        'sad-cry',
+        'meh',
+        'grin-hearts'],
       score: 0,
       highScore: 0,
       resetOnNext: false,
@@ -95,6 +107,7 @@ class App extends Component {
         <Gamepiece value={i}
           onClick={() => this.handleClick(i)}
           pieceStatus={this.state.tags[i].toString()}
+          emoji={this.state.pieceEmoji[i]}
         />
       </div>
     );
