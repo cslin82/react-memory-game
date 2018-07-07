@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-
 // all one file for now, split later
+// make this functional later if possible
 class Gamepiece extends Component {
 
   render() {
@@ -17,9 +17,6 @@ class Gamepiece extends Component {
 }
 // end Gamepiece
 
-
-
-
 class App extends Component {
   constructor(props) {
 
@@ -28,41 +25,45 @@ class App extends Component {
 
     this.state = {
       tags: Array(12).fill(false),
-      pieceorder: this.shuffledArr(12),
+      pieceOrder: this.shuffledArr(12),
       score: 0,
-      highScore: 0
+      highScore: 0,
+      resetOnNext: false,
+      condition: ''
     }
 
   }
 
   handleClick(i) {
-    if (this.state.tags[i]) {
-      alert('miss');
+    if (this.state.resetOnNext) {
       this.resetGame();
     } else {
       // increment current score, track high score
       this.setState((prevState, props) => {
-        let newTags = [...prevState.tags];
-        newTags[i] = !newTags[i]; // or just set to true
 
-        let newScore = prevState.score + 1;
-        let newHighScore = prevState.highScore;
-        if (newScore > prevState.highScore) {
-          newHighScore = newScore;
+        if (this.state.tags[i]) {
+          return {
+            resetOnNext: true,
+            condition: 'lose'
+          }
         }
 
-        if (newTags.every(x => x)) {
-          alert('win');
-          // this.resetGame(); // throws warning
+        let newState = { ...prevState }
+        newState.tags[i] = !prevState.tags[i]; // or just set to true
+        newState.score = prevState.score + 1;
+
+        if (newState.score > prevState.highScore) {
+          newState.highScore = newState.score;
         }
 
-        // ES6-ify this later
-        return {
-          tags: newTags,
-          score: newScore,
-          highScore: newHighScore,
-          pieceorder: this.shuffledArr(12)
-        };
+        if (newState.tags.every(x => x)) {
+          newState.resetOnNext = true;
+          newState.condition = 'win';
+        }
+
+        newState.pieceOrder = this.shuffledArr(12);
+
+        return newState;
       }) // end setState
     }
   }
@@ -71,7 +72,9 @@ class App extends Component {
     this.setState({
       tags: Array(12).fill(false),
       score: 0,
-      pieceorder: this.shuffledArr(12)
+      pieceOrder: this.shuffledArr(12),
+      resetOnNext: false,
+      condition: ''
     })
   }
 
@@ -109,9 +112,10 @@ class App extends Component {
         </header>
         <div className="Game">
           <p className="App-intro">Click on the game cards without repeating</p>
-          Game board goes here (TODO: Prevent shuffle on game win?)
+          <p>Game board goes here (TODO: Prevent shuffle on game win?)</p>
+          {this.state.condition}
           <ul>
-            {this.state.pieceorder.map((i) => this.renderGamepiece(i))}
+            {this.state.pieceOrder.map((i) => this.renderGamepiece(i))}
           </ul>
 
         </div>
