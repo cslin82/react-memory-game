@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -13,5 +13,14 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://cslin82.github.io/react-memory-game"
+  "homepage": "http://cslin82.github.io/react-memory-game",
+  "devDependencies": {
+    "gh-pages": "^2.0.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
