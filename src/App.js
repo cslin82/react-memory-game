@@ -10,7 +10,7 @@ class Gamepiece extends Component {
       <button className="gamepiece btn btn-info"
         onClick={() => this.props.onClick()}
       >
-        <i class={'fa fa-' + this.props.emoji}></i>{/*  {this.props.value} is {this.props.pieceStatus} */}
+        <i className={'fa fa-' + this.props.emoji}></i>{/*  {this.props.value} is {this.props.pieceStatus} */}
       </button>
     );
   }
